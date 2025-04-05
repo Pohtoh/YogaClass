@@ -108,7 +108,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.close();
         return id;
     }
-    public int updateYogaClass(YogaClassData yogaClassData) {
+    public void updateYogaClass(YogaClassData yogaClassData) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(YogaClassData.COLUMN_DAY, yogaClassData.getDay());
@@ -120,7 +120,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         int rowsUpdated = db.update(YogaClassData.TABLE_NAME, values, YogaClassData.COLUMN_ID + "=?",
                 new String[]{String.valueOf(yogaClassData.getId())});
         db.close();
-        return rowsUpdated;
     }
     public void deleteYogaClass(YogaClassData yogaClassData) {
         SQLiteDatabase db = this.getWritableDatabase();

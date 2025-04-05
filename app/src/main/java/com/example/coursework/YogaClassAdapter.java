@@ -8,12 +8,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.coursework.ui.notifications.NotificationsFragment;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class YogaClassAdapter extends RecyclerView.Adapter<YogaClassAdapter.YogaClassViewHolder> {
 
     private List<YogaClassData> yogaClassList;
     private Context context;
+
+    private NotificationsFragment notificationsFragment;
 
     public class MyviewHolder extends RecyclerView.ViewHolder {
         public TextView classType;
@@ -25,28 +30,25 @@ public class YogaClassAdapter extends RecyclerView.Adapter<YogaClassAdapter.Yoga
         }
     }
 
-    public YogaClassAdapter(Context context, List<YogaClassData> classList) {
+    public YogaClassAdapter(Context context, ArrayList<YogaClassData> classList, NotificationsFragment notificationsFragment) {
         this.context = context;
         this.yogaClassList = classList;
-
+        this.notificationsFragment = notificationsFragment;
     }
 
     @NonNull
     @Override
     public YogaClassViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_yoga_class, parent, false);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.item_yoga_class, parent, false);
         return new YogaClassViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull YogaClassViewHolder holder, int position) {
         final YogaClassData yogaClassData = yogaClassList.get(position);
-        holder.classType.setText(yogaClassData.getClassType());
-        holder.details.setText(yogaClassData.getDescription());
         YogaClassData yogaClass = yogaClassList.get(position);
 
         holder.classType.setText(yogaClass.getClassType());
-
         String details = "Day: " + yogaClass.getDay()
                 + " | Duration: " + yogaClass.getDuration()
                 + " | People: " + yogaClass.getNumberOfPeople()
@@ -57,7 +59,7 @@ public class YogaClassAdapter extends RecyclerView.Adapter<YogaClassAdapter.Yoga
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mainActivity.editOrDeleteYogaClass(true, yogaClass, position);
+                notificationsFragment.EditYogaClass(true, yogaClass, position);
             }
     });
         }
