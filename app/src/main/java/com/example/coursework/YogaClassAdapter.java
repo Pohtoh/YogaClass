@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.coursework.ui.home.HomeFragment;
 import com.example.coursework.ui.notifications.NotificationsFragment;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class YogaClassAdapter extends RecyclerView.Adapter<YogaClassAdapter.Yoga
     private Context context;
 
     private NotificationsFragment notificationsFragment;
+    private HomeFragment homeFragment;
 
     public class MyviewHolder extends RecyclerView.ViewHolder {
         public TextView classType;
@@ -35,6 +37,11 @@ public class YogaClassAdapter extends RecyclerView.Adapter<YogaClassAdapter.Yoga
         this.yogaClassList = classList;
         this.notificationsFragment = notificationsFragment;
     }
+    public YogaClassAdapter(Context context, ArrayList<YogaClassData> classList, HomeFragment homeFragment) {
+        this.context = context;
+        this.yogaClassList = classList;
+        this.homeFragment = homeFragment;
+    }
 
     @NonNull
     @Override
@@ -49,7 +56,8 @@ public class YogaClassAdapter extends RecyclerView.Adapter<YogaClassAdapter.Yoga
         YogaClassData yogaClass = yogaClassList.get(position);
 
         holder.classType.setText(yogaClass.getClassType());
-        String details = "Day: " + yogaClass.getDay()
+        String details = "Day of the Week: " + yogaClass.getDay()
+                + " | TimeStart: " + yogaClass.getTime()
                 + " | Duration: " + yogaClass.getDuration()
                 + " | People: " + yogaClass.getNumberOfPeople()
                 + " | Price: " + yogaClass.getPrice() + " Pound\n"
@@ -59,7 +67,9 @@ public class YogaClassAdapter extends RecyclerView.Adapter<YogaClassAdapter.Yoga
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                notificationsFragment.EditYogaClass(true, yogaClass, position);
+                if(notificationsFragment != null){
+                    notificationsFragment.EditYogaClass(true, yogaClass);
+                }
             }
     });
         }

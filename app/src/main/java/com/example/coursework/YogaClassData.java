@@ -4,6 +4,7 @@ public class YogaClassData {
     public static final String TABLE_NAME = "yogaClass";
     public static final String COLUMN_ID = "classID";
     public static final String COLUMN_DAY = "day";
+    public static final String COLUMN_TIME = "time";
     public static final String COLUMN_DURATION = "duration";
     public static final String COLUMN_NUMBER_OF_PEOPLE = "numberOfPeople";
     public static final String COLUMN_PRICE = "price";
@@ -22,12 +23,20 @@ public class YogaClassData {
     public void setId(int id) {
         this.id = id;
     }
-    public int getDay() {
+    public String getDay() {
         return day;
     }
 
-    public void setDay(int day) {
+    public void setDay(String day) {
         this.day = day;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public int getDuration() {
@@ -70,8 +79,9 @@ public class YogaClassData {
         this.description = description;
     }
 
-    private  int id;
-    private int day;
+    private int id;
+    private String day;
+    private String time;
     private int duration;
     private int numberOfPeople;
     private int price;
@@ -79,8 +89,9 @@ public class YogaClassData {
     private String description;
 
     //Contructors
-    public YogaClassData(int day, int duration, int numberOfPeople, int price, String classType, String description) {
+    public YogaClassData(String day, String time, int duration, int numberOfPeople, int price, String classType, String description) {
         this.day = day;
+        this.time = time;
         this.duration = duration;
         this.numberOfPeople = numberOfPeople;
         this.price = price;
@@ -92,6 +103,7 @@ public class YogaClassData {
     public String toString() {
         return "YogaClassData{" +
                 "day=" + day +
+                "time=" + time +
                 ", duration=" + duration +
                 ", numberOfPeople=" + numberOfPeople +
                 ", price=" + price +
@@ -99,11 +111,11 @@ public class YogaClassData {
                 ", description='" + description + '\'' +
                 '}';
     }
-    // SQL Query: Creating the Table
     public static final String CREATE_TABLE =
             "CREATE TABLE " + TABLE_NAME + "("
                     + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + COLUMN_DAY + " INTEGER,"
+                    + COLUMN_DAY + " TEXT,"
+                    + COLUMN_TIME + " INTEGER,"
                     + COLUMN_DURATION + " INTEGER,"
                     + COLUMN_NUMBER_OF_PEOPLE + " INTEGER,"
                     + COLUMN_PRICE + " INTEGER,"

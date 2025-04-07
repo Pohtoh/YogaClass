@@ -41,60 +41,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Class Start At" />
-            <EditText
-                android:id="@+id/editTextTimeStart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Start At"
-                android:inputType="time"
-                android:paddingTop="30dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Number of People" />
-            <EditText
-                android:id="@+id/editTextNumberOfPeople"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Number of People"
-                android:inputType="number"
-                android:paddingTop="30dp" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Duration" />
-            <EditText
-                android:id="@+id/editTextDuration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Duration (Minutes)"
-                android:inputType="number"
-                android:paddingTop="30dp" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Yoga Type" />
+                android:text="Teacher" />
             <AutoCompleteTextView
-                android:id="@+id/autoCompleteTextView"
+                android:id="@+id/autoCompleteTextViewTeacher"
                 android:layout_width="295dp"
                 android:layout_height="51dp" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Price" />
-            <EditText
-                android:id="@+id/editTextPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Price"
-                android:inputType="numberDecimal"
-                android:paddingTop="30dp" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -108,6 +59,11 @@
                 android:hint="Description"
                 android:inputType="textMultiLine"
                 android:paddingTop="30dp"
+                />
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteTextViewClassType"
+                android:layout_width="295dp"
+                android:layout_height="51dp"
                 android:layout_marginBottom="400dp"/>
 
         </LinearLayout>
