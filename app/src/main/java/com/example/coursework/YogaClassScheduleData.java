@@ -49,6 +49,7 @@ public class YogaClassScheduleData {
 
     public static final String TABLE_NAME = "yogaClassSchedule";
     public static final String COLUMN_ID = "classID";
+    public static final String COLUMN_YOGA_CLASS_ID = "yogaClassID";
     public static final String COLUMN_DATE = "date";
     public static final String COLUMN_TEACHER = "Teacher";
     public static final String COLUMN_DESCRIPTION = "description";
@@ -73,7 +74,7 @@ public class YogaClassScheduleData {
     public static final String CREATE_TABLE =
             "CREATE TABLE " + TABLE_NAME + " ("
                     + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + "yogaClassID INTEGER, "
+                    + COLUMN_YOGA_CLASS_ID + " INTEGER, "
                     + COLUMN_DATE + " TEXT, "
                     + COLUMN_TEACHER + " TEXT, "
                     + COLUMN_DESCRIPTION + " TEXT, "

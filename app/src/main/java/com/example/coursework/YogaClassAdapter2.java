@@ -44,10 +44,14 @@ public class YogaClassAdapter2 extends RecyclerView.Adapter<YogaClassAdapter2.Yo
 
         YogaClassData yogaClass = dbHelper.getYogaClassById(scheduleData.getYogaClassID());
         String classType = (yogaClass != null) ? yogaClass.getClassType() : "Unknown Class";
+        String classStartAt = (yogaClass != null) ? yogaClass.getTime() : "Unknown Class";
+
 
         holder.classType.setText(classType);
-        String details = "Teacher: " + scheduleData.getTeacher()
+        String details = "Class id" + scheduleData.getId()
+                + "\nTeacher: " + scheduleData.getTeacher()
                 + "\nDate: " + scheduleData.getDate()
+                + "\nStart Time: " + classStartAt
                 + "\nNote: " + scheduleData.getDescription();
         holder.details.setText(details);
 

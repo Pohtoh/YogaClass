@@ -39,46 +39,37 @@
 
         <!--Schedule Section-->
         <TextView
-            android:layout_width="100dp"
+            android:layout_width="180dp"
             android:layout_height="30dp"
-            android:text="Monday" />
+            android:text="Current Class Schedule" />
+
         <androidx.cardview.widget.CardView
             android:id="@+id/CardMonday"
             android:layout_width="380dp"
             android:layout_height="wrap_content"
             app:cardCornerRadius="8dp"
-            app:cardElevation="30dp">
+            app:cardElevation="30dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="15dp">
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewYogaClasses"
                 android:layout_width="400dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_marginBottom="88dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
         </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:text="Tuesday" />
         <androidx.cardview.widget.CardView
             android:id="@+id/CardTuesday"
             android:layout_width="380dp"
             android:layout_height="wrap_content"
             app:cardCornerRadius="8dp"
-            app:cardElevation="30dp">
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewTuesdayClass"
-                android:layout_width="400dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginBottom="88dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-        </androidx.cardview.widget.CardView>
+            app:cardElevation="30dp"/>
 
 
 

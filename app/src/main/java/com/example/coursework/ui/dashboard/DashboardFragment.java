@@ -21,6 +21,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.example.coursework.R;
 import com.example.coursework.ui.DataBaseHelper;
 
@@ -29,26 +33,33 @@ import java.util.Calendar;
 
 public class DashboardFragment extends Fragment {
 
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        Button myButton = findViewById(R.id.my_button);  // Assuming the button has this ID
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
 
-        myButton.setOnClickListener(new View.OnClickListener() {
+        View rootView = inflater.inflate(R.layout.adding_data, container, false);
+
+        Button buttonToYogaClassAdd = rootView.findViewById(R.id.buttonToYogaClassAdd);
+        Button buttonToScheduleAdd = rootView.findViewById(R.id.buttonToScheduleAdd);
+
+        buttonToYogaClassAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Create a new instance of the fragment
-                MyFragment myFragment = new MyFragment();
-
-                // Get the FragmentTransaction
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-                // Replace the current fragment with the new fragment
-                transaction.replace(R.id.fragment_container, myFragment);  // fragment_container is your container's ID
-                transaction.addToBackStack(null);  // Optional: Add to back stack to handle navigation back
-                transaction.commit();  // Commit the transaction
+                NavController navController = NavHostFragment.findNavController(DashboardFragment.this);
+                navController.navigate(R.id.navigation_yoga_course_add);
             }
         });
+        buttonToScheduleAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController navController = NavHostFragment.findNavController(DashboardFragment.this);
+                navController.navigate(R.id.navigation_schedule_add);
+            }
+        });
+
+
+        return rootView;
     }
 }

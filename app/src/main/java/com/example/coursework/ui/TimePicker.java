@@ -102,29 +102,32 @@ public class TimePicker {
             builder.create().show();
         });
     }
-    public static void showDatePicker(Context context) {
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
+    public static void showDatePicker(@NonNull View view) {
+        EditText editTextDate = view.findViewById(R.id.editTextDate);
+        editTextDate.setInputType(InputType.TYPE_NULL); // Prevent keyboard
+        editTextDate.setFocusable(false);
+        editTextDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(context,
-                (view, selectedYear, selectedMonth, selectedDay) -> {
-                    // Convert selected date to a Calendar object
-                    Calendar selectedDate = Calendar.getInstance();
-                    selectedDate.set(selectedYear, selectedMonth, selectedDay);
-
-                    // Check if the selected date is Monday (DAY_OF_WEEK = 2 for Monday)
-                    if (selectedDate.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
-                        // If it's Monday, proceed with the date
-                        Toast.makeText(context, "Selected Monday: " + selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear, Toast.LENGTH_SHORT).show();
-                    } else {
-                        // If it's not Monday, show a message and reset the date picker
-                        Toast.makeText(context, "Please select a Monday!", Toast.LENGTH_SHORT).show();
+                DatePickerDialog datePickerDialog = new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
+                        Calendar selectedDate = Calendar.getInstance();
+                        selectedDate.set(selectedYear, selectedMonth, selectedDay);
+                        if (selectedDate.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
+                            String formattedDate = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
+                            editTextDate.setText(formattedDate);
+                        }
                     }
                 }, year, month, day);
 
-        // Show the DatePickerDialog
-        datePickerDialog.show();
+                datePickerDialog.show();
+            }
+        });
     }
 }

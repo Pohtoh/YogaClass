@@ -42,7 +42,6 @@ public class HomeFragment extends Fragment {
 
         dbHelper = new DataBaseHelper(view.getContext());
 
-        // Get both schedules and classes
         yogaScheduleList = dbHelper.getAllYogaSchedules();
         yogaClassList = dbHelper.getAllYogaClasses();
 
@@ -80,7 +79,6 @@ public class HomeFragment extends Fragment {
             editTextTeacher.setText(scheduleData.getTeacher());
             editTextDescription.setText(scheduleData.getDescription());
 
-            // Load the classType for the dropdown from yogaClassID
             YogaClassData linkedClass = dbHelper.getYogaClassById(scheduleData.getYogaClassID());
             if (linkedClass != null) {
                 classDropdown.setText(linkedClass.getClassType(), false);
@@ -91,7 +89,6 @@ public class HomeFragment extends Fragment {
                 .setPositiveButton(isUpdated ? "Update" : "Save", (dialog, which) -> {
                     if (validateInputs(editTextDate, editTextTeacher, classDropdown)) {
 
-                        // Find the selected class by name
                         String selectedClassType = classDropdown.getText().toString();
                         int selectedClassId = -1;
                         for (YogaClassData yogaClass : yogaClassList) {

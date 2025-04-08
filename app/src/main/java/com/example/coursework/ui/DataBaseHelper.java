@@ -152,7 +152,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         if (cursor != null && cursor.moveToFirst()) {
             yogaClass = new YogaClassData();
             yogaClass.setId(cursor.getInt(cursor.getColumnIndexOrThrow("classID")));
+            yogaClass.setDay(cursor.getString(cursor.getColumnIndexOrThrow("day")));
             yogaClass.setClassType(cursor.getString(cursor.getColumnIndexOrThrow("classType")));
+            yogaClass.setTime(cursor.getString(cursor.getColumnIndexOrThrow("time")));
             yogaClass.setDuration(cursor.getInt(cursor.getColumnIndexOrThrow("duration")));
             yogaClass.setNumberOfPeople(cursor.getInt(cursor.getColumnIndexOrThrow("numberOfPeople")));
             yogaClass.setPrice(cursor.getInt(cursor.getColumnIndexOrThrow("price")));
@@ -203,5 +205,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 YogaClassScheduleData.COLUMN_ID + " = ?",
                 new String[]{String.valueOf(schedule.getId())});
         db.close();
+    }
+    public long insertYogaClassSchedule(String date, String teacher, int classId, String description) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(YogaClassScheduleData.COLUMN_YOGA_CLASS_ID, classId);
+        values.put(YogaClassScheduleData.COLUMN_DATE, date);
+        values.put(YogaClassScheduleData.COLUMN_TEACHER, teacher);
+        values.put(YogaClassScheduleData.COLUMN_DESCRIPTION, description);
+
+        long id = db.insert(YogaClassScheduleData.TABLE_NAME, null, values);
+        db.close();
+        return id;
     }
 }

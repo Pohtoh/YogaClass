@@ -12,15 +12,28 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_adding_data"
         android:name="com.example.coursework.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/adding_data" />
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.coursework.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/navigation_yoga_course_add"
+        android:name="com.example.coursework.ui.dashboard.YogaCourseAdd"
+        android:label="Add Yoga Course "
+        tools:layout="@layout/yoga_course_add" />
+
+    <fragment
+        android:id="@+id/navigation_schedule_add"
+        android:name="com.example.coursework.ui.dashboard.ScheduleAdd"
+        android:label="Add Schedule"
+        tools:layout="@layout/yoga_course_schedule_add" />
+
 
 </navigation>
