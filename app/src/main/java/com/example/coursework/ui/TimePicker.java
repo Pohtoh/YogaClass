@@ -3,25 +3,21 @@ package com.example.coursework.ui;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
-import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.example.coursework.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class TimePicker {
-    private DataBaseHelper dbHelper;
     public static void GetDateLayout(@NonNull View view) {
 
     EditText editTextDate = view.findViewById(R.id.editTextDate);
@@ -102,9 +98,12 @@ public class TimePicker {
             builder.create().show();
         });
     }
-    public static void showDatePicker(@NonNull View view) {
+    public interface DatePickerCallback {
+        void onDatePicked(String formattedDate, String dayOfWeek);
+    }
+    public static void showDatePicker(@NonNull View view, DatePickerCallback callback) {
         EditText editTextDate = view.findViewById(R.id.editTextDate);
-        editTextDate.setInputType(InputType.TYPE_NULL); // Prevent keyboard
+        editTextDate.setInputType(InputType.TYPE_NULL);
         editTextDate.setFocusable(false);
         editTextDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,10 +118,11 @@ public class TimePicker {
                     public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
                         Calendar selectedDate = Calendar.getInstance();
                         selectedDate.set(selectedYear, selectedMonth, selectedDay);
-                        if (selectedDate.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
-                            String formattedDate = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
+                        String dayOfWeek =  selectedDate.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
+                        assert dayOfWeek != null;
+                            String formattedDate = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear + " " + selectedDate.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault()) ;
                             editTextDate.setText(formattedDate);
-                        }
+                            callback.onDatePicked(formattedDate, dayOfWeek);
                     }
                 }, year, month, day);
 

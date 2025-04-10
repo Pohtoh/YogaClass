@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coursework.ui.DataBaseHelper;
 import com.example.coursework.ui.home.HomeFragment;
-import com.example.coursework.ui.notifications.NotificationsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +21,18 @@ public class YogaClassAdapter2 extends RecyclerView.Adapter<YogaClassAdapter2.Yo
     private Context context;
     private HomeFragment homeFragment;
     private DataBaseHelper dbHelper;
+    private List<YogaClassScheduleData> fullList;
+    private List<YogaClassScheduleData> filteredList;
 
-    public YogaClassAdapter2(Context context, ArrayList<YogaClassScheduleData> classList, HomeFragment homeFragment, DataBaseHelper dbHelper) {
+    public YogaClassAdapter2(Context context, List<YogaClassScheduleData> list, HomeFragment homeFragment, DataBaseHelper dbHelper) {
         this.context = context;
-        this.yogaClassScheduleList = classList;
+        this.yogaClassScheduleList = list;
+        this.fullList = new ArrayList<>(list);
+        this.filteredList = new ArrayList<>(list);
         this.homeFragment = homeFragment;
         this.dbHelper = dbHelper;
     }
+
 
     @NonNull
     @Override
@@ -39,13 +43,11 @@ public class YogaClassAdapter2 extends RecyclerView.Adapter<YogaClassAdapter2.Yo
 
     @Override
     public void onBindViewHolder(@NonNull YogaClassViewHolder holder, int position) {
-        final YogaClassScheduleData yogaClassScheduleData = yogaClassScheduleList.get(position);
-        YogaClassScheduleData scheduleData = yogaClassScheduleList.get(position);
+        final YogaClassScheduleData scheduleData = filteredList.get(position);
 
         YogaClassData yogaClass = dbHelper.getYogaClassById(scheduleData.getYogaClassID());
         String classType = (yogaClass != null) ? yogaClass.getClassType() : "Unknown Class";
         String classStartAt = (yogaClass != null) ? yogaClass.getTime() : "Unknown Class";
-
 
         holder.classType.setText(classType);
         String details = "Class id" + scheduleData.getId()
@@ -64,10 +66,30 @@ public class YogaClassAdapter2 extends RecyclerView.Adapter<YogaClassAdapter2.Yo
             }
     });
         }
+    public void filter(String query) {
+        filteredList = new ArrayList<>();
+        for (YogaClassScheduleData item : fullList) {
+            boolean match1 = false;
+            boolean match2 = false;
+            if (item.getTeacher().toLowerCase().contains(query.toLowerCase()) ||
+                    item.getDate().toLowerCase().contains(query.toLowerCase())
+                     ) {
+                match1 = true;
+            }
+            YogaClassData yogaClass = dbHelper.getYogaClassById(item.getYogaClassID());
+            if(yogaClass != null && yogaClass.getClassType().toLowerCase().contains(query.toLowerCase())){
+                match2 = true;
+            }
+            if (match1 || match2) {
+                filteredList.add(item);
+            }
+        }
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getItemCount() {
-        return yogaClassScheduleList.size();
+        return filteredList != null ? filteredList.size() : 0;
     }
 
     public static class YogaClassViewHolder extends RecyclerView.ViewHolder {

@@ -1,8 +1,5 @@
 package com.example.coursework.ui.dashboard;
 
-import static com.example.coursework.ui.TimePicker.GetDayOfTheWeek;
-import static com.example.coursework.ui.TimePicker.showDatePicker;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,12 +18,15 @@ import androidx.fragment.app.Fragment;
 import com.example.coursework.R;
 import com.example.coursework.YogaClassData;
 import com.example.coursework.ui.DataBaseHelper;
+import com.example.coursework.ui.TimePicker;
 
 import java.util.ArrayList;
 
 public class ScheduleAdd extends Fragment {
 
     private DataBaseHelper dbHelper;
+    private String dateOfWeek;
+    private String WDAY;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.yoga_course_schedule_add, container, false);
@@ -37,7 +37,14 @@ public class ScheduleAdd extends Fragment {
         dbHelper = new DataBaseHelper(getContext());
 
         EditText editTextDate = view.findViewById(R.id.editTextDate);
-        showDatePicker(view);
+        //showDatePicker(view);
+        TimePicker.showDatePicker(view, new TimePicker.DatePickerCallback() {
+            @Override
+            public void onDatePicked(String formattedDate, String dayOfWeek) {
+                editTextDate.setText(formattedDate);
+                WDAY = dayOfWeek;
+            }
+        });
 
         AutoCompleteTextView autoCompleteTextViewTeacher = view.findViewById(R.id.autoCompleteTextViewTeacher);
         String[] teacherOptions = {"Miss A", "Miss B", "Miss C", "Miss D", "Miss E"};
@@ -50,7 +57,7 @@ public class ScheduleAdd extends Fragment {
         ArrayList<YogaClassData> yogaClassDataList = dbHelper.getAllYogaClasses();
         ArrayList<String> yogaClassNames = new ArrayList<>();
         for (YogaClassData yogaClassData : yogaClassDataList) {
-            yogaClassNames.add(yogaClassData.getClassType() + " " + yogaClassData.getDay());
+            yogaClassNames.add("Class" + yogaClassData.getClassType() + " Start On " + yogaClassData.getDay() + " Price" + yogaClassData.getPrice() + " Pound");
         }
         ArrayAdapter<String> yogaClassAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, yogaClassNames);
         Spinner spinner = view.findViewById(R.id.spinner);
@@ -63,21 +70,25 @@ public class ScheduleAdd extends Fragment {
                     int selectedPosition = spinner.getSelectedItemPosition();
                     YogaClassData selectedYogaClass = yogaClassDataList.get(selectedPosition);
                     int yogaClassID = selectedYogaClass.getId();
+                    dateOfWeek = dbHelper.getYogaClassTypeById(yogaClassID);
 
                     if (editTextDate.getText().toString().isEmpty() ||
                             autoCompleteTextViewTeacher.getText().toString().isEmpty()
                             ){
-                        Toast.makeText(getContext(), "Please fill in all required fields!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Please fill in all required fields!", Toast.LENGTH_LONG).show();
                     }else {
                         String day = editTextDate.getText().toString();
                         String teacher = autoCompleteTextViewTeacher.getText().toString();
                         String description = editTextTextMultiLine.getText().toString();
-
-                        long newRowId = dbHelper.insertYogaClassSchedule(day, teacher, yogaClassID, description);
-                        if (newRowId != -1) {
-                            Toast.makeText(getContext(), "Added new Class to schedule", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getContext(), "Failed to add new Class to schedule", Toast.LENGTH_SHORT).show();
+                        if(dateOfWeek.contains(WDAY)) {
+                            long newRowId = dbHelper.insertYogaClassSchedule(day, teacher, yogaClassID, description);
+                            if (newRowId != -1) {
+                                Toast.makeText(getContext(), "Added new Class to schedule", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getContext(), "Failed to add new Class to schedule", Toast.LENGTH_SHORT).show();
+                            }
+                        }else{
+                            Toast.makeText(getContext(), "This class is not available on this day", Toast.LENGTH_LONG).show();
                         }
                     }
                 } catch (Exception e) {

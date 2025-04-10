@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -23,6 +24,7 @@ import com.example.coursework.ui.TimePicker;
 import com.example.coursework.YogaClassScheduleData;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
 
@@ -47,6 +49,23 @@ public class HomeFragment extends Fragment {
 
         yogaClassAdapter2 = new YogaClassAdapter2(getContext(), yogaScheduleList, this, dbHelper);
         recyclerView.setAdapter(yogaClassAdapter2);
+
+
+        SearchView searchView = view.findViewById(R.id.searchView);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                yogaClassAdapter2.filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                yogaClassAdapter2.filter(newText);
+                return false;
+            }
+        });
 
         return view;
     }

@@ -1,6 +1,13 @@
 package com.example.coursework;
 
 public class YogaClassScheduleData {
+    public YogaClassScheduleData(int id, String date, String teacher, String description) {
+        this.id = id;
+        this.date = date;
+        this.teacher = teacher;
+        this.description = description;
+    }
+
     public int getId() {
         return id;
     }

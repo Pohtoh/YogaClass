@@ -71,8 +71,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
-
-    //geting data
     @SuppressLint("Range")
     public ArrayList<YogaClassData> getAllYogaClasses() {
         ArrayList<YogaClassData> yogaClassDatas = new ArrayList<>();
@@ -217,5 +215,19 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         long id = db.insert(YogaClassScheduleData.TABLE_NAME, null, values);
         db.close();
         return id;
+    }
+
+    public String getYogaClassTypeById(int id) {
+        String classType = null;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT day FROM " + YogaClassData.TABLE_NAME + " WHERE classID = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(id)});
+
+        if (cursor != null && cursor.moveToFirst()) {
+            classType = cursor.getString(0);
+            cursor.close();
+        }
+        return classType;
     }
 }

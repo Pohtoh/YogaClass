@@ -22,25 +22,10 @@ public class YogaClassAdapter extends RecyclerView.Adapter<YogaClassAdapter.Yoga
     private NotificationsFragment notificationsFragment;
     private HomeFragment homeFragment;
 
-    public class MyviewHolder extends RecyclerView.ViewHolder {
-        public TextView classType;
-        public TextView details;
-        public MyviewHolder(@NonNull View itemView) {
-            super(itemView);
-            classType = itemView.findViewById(R.id.textViewClassType);
-            details = itemView.findViewById(R.id.textViewDetails);
-        }
-    }
-
     public YogaClassAdapter(Context context, ArrayList<YogaClassData> classList, NotificationsFragment notificationsFragment) {
         this.context = context;
         this.yogaClassList = classList;
         this.notificationsFragment = notificationsFragment;
-    }
-    public YogaClassAdapter(Context context, ArrayList<YogaClassData> classList, HomeFragment homeFragment) {
-        this.context = context;
-        this.yogaClassList = classList;
-        this.homeFragment = homeFragment;
     }
 
     @NonNull
