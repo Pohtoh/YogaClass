@@ -17,7 +17,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "yogaClassDB";
 
     public DataBaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        super(context.getApplicationContext(), DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
@@ -216,7 +216,30 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.close();
         return id;
     }
+    public long insertYogaClassSchedule2(int ID, String date, String teacher, int classId, String description) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(YogaClassScheduleData.COLUMN_ID, ID);
+        values.put(YogaClassScheduleData.COLUMN_YOGA_CLASS_ID, classId);
+        values.put(YogaClassScheduleData.COLUMN_DATE, date);
+        values.put(YogaClassScheduleData.COLUMN_TEACHER, teacher);
+        values.put(YogaClassScheduleData.COLUMN_DESCRIPTION, description);
 
+        return db.insertWithOnConflict("YogaClassSchedule", null, values, SQLiteDatabase.CONFLICT_REPLACE);
+    }
+    public long insertYogaClass2(int id, String day, String time, int duration, int numberOfPeople, int price, String classType, String description) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(YogaClassData.COLUMN_DAY, day);
+        values.put(YogaClassData.COLUMN_TIME, time);
+        values.put(YogaClassData.COLUMN_DURATION, duration);
+        values.put(YogaClassData.COLUMN_NUMBER_OF_PEOPLE, numberOfPeople);
+        values.put(YogaClassData.COLUMN_PRICE, price);
+        values.put(YogaClassData.COLUMN_CLASS_TYPE, classType);
+        values.put(YogaClassData.COLUMN_DESCRIPTION, description);
+
+        return db.insertWithOnConflict("YogaClass", null, values, SQLiteDatabase.CONFLICT_REPLACE);
+    }
     public String getYogaClassTypeById(int id) {
         String classType = null;
         SQLiteDatabase db = this.getReadableDatabase();

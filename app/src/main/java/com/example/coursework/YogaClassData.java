@@ -16,6 +16,9 @@ public class YogaClassData {
 
     }
 
+    public YogaClassData(int id, String classType, String day, String time, int duration, int numberOfPeople, int price, String description) {
+    }
+
     public int getId() {
         return id;
     }

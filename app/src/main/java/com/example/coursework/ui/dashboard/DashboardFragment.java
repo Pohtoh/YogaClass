@@ -20,7 +20,9 @@ import com.example.coursework.ui.DataBaseHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -37,7 +39,8 @@ public class DashboardFragment extends Fragment {
 
         Button buttonToYogaClassAdd = rootView.findViewById(R.id.buttonToYogaClassAdd);
         Button buttonToScheduleAdd = rootView.findViewById(R.id.buttonToScheduleAdd);
-        Button buttonSynchData = rootView.findViewById(R.id.buttonSynchData);
+        Button buttonUploadData = rootView.findViewById(R.id.buttonUploadData);
+        Button buttonRetrieveData = rootView.findViewById(R.id.buttonRetrieveData);
 
         buttonToYogaClassAdd.setOnClickListener(v -> {
             NavController navController = NavHostFragment.findNavController(DashboardFragment.this);
@@ -48,7 +51,7 @@ public class DashboardFragment extends Fragment {
             navController.navigate(R.id.navigation_schedule_add);
         });
 
-        buttonSynchData.setOnClickListener(v -> {
+        buttonUploadData.setOnClickListener(v -> {
             try {
                 ArrayList<YogaClassScheduleData> scheduleList = dbHelper.getAllYogaSchedules();
                 FirebaseFirestore firestore = FirebaseFirestore.getInstance();
@@ -87,6 +90,64 @@ public class DashboardFragment extends Fragment {
                 Log.e("Firebase", "Failed: ", e);
             }
         });
+
+        buttonRetrieveData.setOnClickListener(v ->{
+            FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+            firestore.collection("YogaSchedules")
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        List<YogaClassScheduleData> scheduleList = new ArrayList<>();
+                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots){
+                            Long idLong = doc.getLong("id");
+                            int id = (idLong != null) ? idLong.intValue() : 0;
+
+                            String date = doc.getString("date");
+                            String teacher = doc.getString("teacher");
+                            String description = doc.getString("description");
+
+                            Long classIdLong = doc.getLong("yogaClassID");
+                            int yogaClassID = (classIdLong != null) ? classIdLong.intValue() : 0;
+
+                            YogaClassScheduleData data = new YogaClassScheduleData(id, yogaClassID, teacher, date, description);
+                            dbHelper.insertYogaClassSchedule2(id, date, teacher, yogaClassID, description);
+                        }
+                        Toast.makeText(getContext(), "Retrieve data completed.", Toast.LENGTH_SHORT).show();
+                    })
+                    .addOnFailureListener(e ->{
+                        Log.e("Firebase", "Error getting document", e);
+                    });
+            firestore.collection("YogaClasses")
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        List<YogaClassData> classList = new ArrayList<>();
+                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                            Long idLong = doc.getLong("id");
+                            int id = (idLong != null) ? idLong.intValue() : 0;
+
+                            String classType = doc.getString("classType");
+                            String day = doc.getString("day");
+                            String time = doc.getString("time");
+
+                            Long durationLong = doc.getLong("duration");
+                            int duration = (durationLong != null) ? durationLong.intValue() : 0;
+
+
+                            Long numberOfPeopleLong = doc.getLong("numberOfPeople");
+                            int numberOfPeople = (numberOfPeopleLong != null) ? numberOfPeopleLong.intValue() : 0;
+
+                            Long priceLong = doc.getLong("price");
+                            int price = (priceLong != null) ? priceLong.intValue() : 0;
+
+                            String description = doc.getString("description");
+
+                            dbHelper.insertYogaClass2(id, day, time, duration, numberOfPeople, price, classType, description);
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e("Firebase", "Error getting documents", e);
+                    });
+        });
+
 
 
         return rootView;
