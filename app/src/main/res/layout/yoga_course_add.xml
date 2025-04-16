@@ -28,7 +28,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Date of Yoga Class" />
+                android:text="Date of Yoga Class"
+                android:textSize="20sp"/>
 
             <EditText
                 android:id="@+id/editTextDate"
@@ -37,12 +38,13 @@
                 android:ems="10"
                 android:hint="Date"
                 android:inputType="date"
-                android:paddingTop="30dp"
-                android:layout_marginTop="20dp"/>
+                android:paddingTop="30dp"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Class Start At" />
+                android:text="Class Start At"
+                android:paddingTop="30dp"
+                android:textSize="20sp"/>
             <EditText
                 android:id="@+id/editTextTimeStart"
                 android:layout_width="wrap_content"
@@ -50,12 +52,14 @@
                 android:ems="10"
                 android:hint="Start At"
                 android:inputType="time"
-                android:paddingTop="30dp" />
+                android:paddingTop="30dp"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Number of People" />
+                android:text="Number of People"
+                android:paddingTop="30dp"
+                android:textSize="20sp"/>
             <EditText
                 android:id="@+id/editTextNumberOfPeople"
                 android:layout_width="wrap_content"
@@ -67,7 +71,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Duration" />
+                android:text="Duration"
+                android:paddingTop="30dp"
+                android:textSize="20sp"/>
             <EditText
                 android:id="@+id/editTextDuration"
                 android:layout_width="wrap_content"
@@ -79,27 +85,33 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Yoga Type" />
+                android:text="Yoga Type"
+                android:layout_marginTop="20dp"
+                android:textSize="20sp"/>
             <AutoCompleteTextView
                 android:id="@+id/autoCompleteTextView"
                 android:layout_width="295dp"
-                android:layout_height="51dp" />
+                android:layout_height="51dp"
+                android:hint="Yoga Type: e.g Hatha"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Price" />
+                android:text="Price £"
+                android:textSize="20sp"/>
             <EditText
                 android:id="@+id/editTextPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Price"
+                android:hint="Price £"
                 android:inputType="numberDecimal"
                 android:paddingTop="30dp" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Description" />
+                android:text="Description"
+                android:layout_marginTop="20dp"
+                android:textSize="20sp"/>
             <EditText
                 android:id="@+id/editTextTextMultiLine"
                 android:layout_width="374dp"
@@ -107,8 +119,7 @@
                 android:ems="10"
                 android:gravity="start|top"
                 android:hint="Description"
-                android:inputType="textMultiLine"
-                android:paddingTop="30dp" />
+                android:inputType="textMultiLine" />
 
             <Button
                 android:id="@+id/buttonAdd"
