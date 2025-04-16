@@ -89,7 +89,7 @@ public class YogaClassAdapter2 extends RecyclerView.Adapter<YogaClassAdapter2.Yo
 
     @Override
     public int getItemCount() {
-        return filteredList != null ? filteredList.size() : 0;
+        return filteredList.size() ;
     }
 
     public static class YogaClassViewHolder extends RecyclerView.ViewHolder {
@@ -100,6 +100,17 @@ public class YogaClassAdapter2 extends RecyclerView.Adapter<YogaClassAdapter2.Yo
             super(itemView);
             classType = itemView.findViewById(R.id.textViewClassType);
             details = itemView.findViewById(R.id.textViewDetails);
+        }
+    }
+    public void removeItem(YogaClassScheduleData item) {
+        int index = filteredList.indexOf(item);
+        filteredList.remove(item);
+        fullList.remove(item);
+
+        if (index != -1) {
+            notifyItemRemoved(index);
+        } else {
+            notifyDataSetChanged(); // fallback
         }
     }
 }

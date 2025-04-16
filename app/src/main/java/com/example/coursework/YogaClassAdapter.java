@@ -18,10 +18,7 @@ public class YogaClassAdapter extends RecyclerView.Adapter<YogaClassAdapter.Yoga
 
     private List<YogaClassData> yogaClassList;
     private Context context;
-
     private NotificationsFragment notificationsFragment;
-    private HomeFragment homeFragment;
-
     public YogaClassAdapter(Context context, ArrayList<YogaClassData> classList, NotificationsFragment notificationsFragment) {
         this.context = context;
         this.yogaClassList = classList;
@@ -41,8 +38,9 @@ public class YogaClassAdapter extends RecyclerView.Adapter<YogaClassAdapter.Yoga
         YogaClassData yogaClass = yogaClassList.get(position);
 
         holder.classType.setText(yogaClass.getClassType());
-        String details = "Day of the Week: " + yogaClass.getDay()
-                + " | TimeStart: " + yogaClass.getTime()
+        String details = "ID: "+yogaClass.getId()
+                + " | Day of the Week: " + yogaClass.getDay()
+                + "\nTimeStart: " + yogaClass.getTime()
                 + " | Duration: " + yogaClass.getDuration()
                 + " | People: " + yogaClass.getNumberOfPeople()
                 + " | Price: " + yogaClass.getPrice() + " Pound\n"

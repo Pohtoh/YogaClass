@@ -78,7 +78,6 @@ public class YogaCourseAdd extends Fragment {
                     }
                 } catch (Exception e) {
                     Toast.makeText(getContext(), "Invalid input! Please enter valid data.", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getContext(),e.toString(), Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -3,6 +3,7 @@ package com.example.coursework.ui.home;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +24,7 @@ import com.example.coursework.YogaClassData;
 import com.example.coursework.ui.DataBaseHelper;
 import com.example.coursework.ui.TimePicker;
 import com.example.coursework.YogaClassScheduleData;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +50,7 @@ public class HomeFragment extends Fragment {
         yogaScheduleList = dbHelper.getAllYogaSchedules();
         yogaClassList = dbHelper.getAllYogaClasses();
 
-        yogaClassAdapter2 = new YogaClassAdapter2(getContext(), yogaScheduleList, this, dbHelper);
+        yogaClassAdapter2 = new YogaClassAdapter2(getContext(), yogaScheduleList, HomeFragment.this, dbHelper);
         recyclerView.setAdapter(yogaClassAdapter2);
 
 
@@ -73,7 +76,7 @@ public class HomeFragment extends Fragment {
     public void EditYogaClass(final boolean isUpdated, final YogaClassScheduleData scheduleData) {
         LayoutInflater layoutInflater = LayoutInflater.from(getContext());
         View view = layoutInflater.inflate(R.layout.item_update_yoga_schedule, null);
-
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
         dialogBuilder.setView(view);
 
@@ -83,8 +86,7 @@ public class HomeFragment extends Fragment {
         final AutoCompleteTextView classDropdown = view.findViewById(R.id.autoCompleteTextViewClassType);
 
         TimePicker.GetDateLayout(view);
-
-        // Setup dropdown for class type selection
+        //drop down
         ArrayList<String> classTypeList = new ArrayList<>();
         for (YogaClassData yogaClass : yogaClassList) {
             classTypeList.add(yogaClass.getClassType());
@@ -128,6 +130,9 @@ public class HomeFragment extends Fragment {
                         scheduleData.setYogaClassID(selectedClassId);
 
                         dbHelper.updateYogaSchedule(scheduleData);
+                        firestore.collection("YogaSchedules")
+                                .document(String.valueOf(scheduleData.getId()))
+                                .set(scheduleData);
 
                         int updatedPosition = yogaScheduleList.indexOf(scheduleData);
                         if (updatedPosition != -1) {
@@ -136,20 +141,26 @@ public class HomeFragment extends Fragment {
                         }
                     }
                 })
-                .setNegativeButton(isUpdated ? "Delete" : "Cancel", (dialog, which) -> {
+                .setNegativeButton(isUpdated ? "Delete" : "Cancel", (dialogInterface, i) -> {
                     if (isUpdated) {
                         dbHelper.deleteYogaSchedule(scheduleData);
+
+
+                        firestore.collection("YogaSchedules")
+                                .document(String.valueOf(scheduleData.getId()))
+                                .delete();
+
                         int deletedPosition = yogaScheduleList.indexOf(scheduleData);
                         if (deletedPosition != -1) {
                             yogaScheduleList.remove(deletedPosition);
-                            yogaClassAdapter2.notifyItemRemoved(deletedPosition);
+                            yogaClassAdapter2.removeItem(scheduleData);
                         }
                     } else {
-                        dialog.cancel();
+                        dialogInterface.cancel();
                     }
                 });
 
-        AlertDialog alertDialog = dialogBuilder.create();
+        final AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
     }
 

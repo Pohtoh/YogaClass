@@ -57,7 +57,7 @@ public class ScheduleAdd extends Fragment {
         ArrayList<YogaClassData> yogaClassDataList = dbHelper.getAllYogaClasses();
         ArrayList<String> yogaClassNames = new ArrayList<>();
         for (YogaClassData yogaClassData : yogaClassDataList) {
-            yogaClassNames.add("Class" + yogaClassData.getClassType() + " Start On " + yogaClassData.getDay() + " Price" + yogaClassData.getPrice() + " Pound");
+            yogaClassNames.add(yogaClassData.getClassType() + ": " + yogaClassData.getDay() + " " + yogaClassData.getPrice() + "£");
         }
         ArrayAdapter<String> yogaClassAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, yogaClassNames);
         Spinner spinner = view.findViewById(R.id.spinner);

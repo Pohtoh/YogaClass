@@ -19,6 +19,7 @@ import com.example.coursework.YogaClassData;
 import com.example.coursework.ui.DataBaseHelper;
 import com.example.coursework.YogaClassAdapter;
 import com.example.coursework.ui.TimePicker;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -50,7 +51,7 @@ public class NotificationsFragment extends Fragment {
     public void EditYogaClass(final boolean isUpdated, final YogaClassData yogaClass) {
         LayoutInflater layoutInflater = LayoutInflater.from(getContext());
         View view = layoutInflater.inflate(R.layout.item_update_yoga_class, null);
-
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         AlertDialog.Builder alerDialogBuilder = new AlertDialog.Builder(getContext());
         alerDialogBuilder.setView(view);
 
@@ -90,6 +91,9 @@ public class NotificationsFragment extends Fragment {
 
                         dbHelper.updateYogaClass(yogaClass);
 
+                        firestore.collection("YogaClasses")
+                                .document(String.valueOf(yogaClass.getId()))
+                                .set(yogaClass);
                         int updatedPosition = yogaClassArrayList.indexOf(yogaClass);
                         if (updatedPosition != -1) {
                             yogaClassArrayList.set(updatedPosition, yogaClass);
@@ -105,6 +109,9 @@ public class NotificationsFragment extends Fragment {
                         dbHelper.deleteYogaClass(yogaClass);
 
                         int deletePosition = yogaClassArrayList.indexOf(yogaClass);
+                        firestore.collection("YogaClasses")
+                                .document(String.valueOf(yogaClass.getId()))
+                                .delete();
                         if (deletePosition != -1) {
                             yogaClassArrayList.remove(deletePosition);
                             yogaClassAdapter.notifyItemRemoved(deletePosition);

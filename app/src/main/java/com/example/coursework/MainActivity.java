@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
-
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.nav_host_fragment_activity_main);
         NavController navController = navHostFragment.getNavController();
@@ -44,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
                 binding.navView.setVisibility(View.VISIBLE);
             }
         });
-
 
         appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home,

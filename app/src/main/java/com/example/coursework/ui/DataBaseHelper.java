@@ -98,7 +98,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return yogaClassDatas;
     }
 
-    //insert data
     public long insertYogaClass(String day, String time, int duration, int numberOfPeople, int price, String classType, String description) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -216,6 +215,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.close();
         return id;
     }
+    public boolean yogaClassScheduleExists(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT 1 FROM yogaClassSchedule WHERE id = ?", new String[]{String.valueOf(id)});
+        boolean exists = cursor.moveToFirst();
+        cursor.close();
+        return exists;
+    }
     public long insertYogaClassSchedule2(int ID, String date, String teacher, int classId, String description) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -224,12 +230,22 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(YogaClassScheduleData.COLUMN_DATE, date);
         values.put(YogaClassScheduleData.COLUMN_TEACHER, teacher);
         values.put(YogaClassScheduleData.COLUMN_DESCRIPTION, description);
-
-        return db.insertWithOnConflict("YogaClassSchedule", null, values, SQLiteDatabase.CONFLICT_REPLACE);
+            long id = db.insert(YogaClassData.TABLE_NAME, null, values);
+            db.close();
+            return id;
     }
-    public long insertYogaClass2(int id, String day, String time, int duration, int numberOfPeople, int price, String classType, String description) {
+    public boolean yogaClassExists(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT 1 FROM yogaClasses WHERE id = ?", new String[]{String.valueOf(id)});
+        boolean exists = cursor.moveToFirst();
+        cursor.close();
+        return exists;
+    }
+    //For cloud insert
+    public long insertYogaClass2(int ID, String day, String time, int duration, int numberOfPeople, int price, String classType, String description) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(YogaClassData.COLUMN_ID, ID);
         values.put(YogaClassData.COLUMN_DAY, day);
         values.put(YogaClassData.COLUMN_TIME, time);
         values.put(YogaClassData.COLUMN_DURATION, duration);
@@ -237,8 +253,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(YogaClassData.COLUMN_PRICE, price);
         values.put(YogaClassData.COLUMN_CLASS_TYPE, classType);
         values.put(YogaClassData.COLUMN_DESCRIPTION, description);
-
-        return db.insertWithOnConflict("YogaClass", null, values, SQLiteDatabase.CONFLICT_REPLACE);
+        long id = db.insert(YogaClassData.TABLE_NAME, null, values);
+        db.close();
+        return id;
     }
     public String getYogaClassTypeById(int id) {
         String classType = null;
