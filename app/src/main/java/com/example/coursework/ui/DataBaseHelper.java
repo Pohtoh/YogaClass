@@ -33,44 +33,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public YogaClassData getYogaClass(long id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(YogaClassData.TABLE_NAME,
-                new String[]{
-                        YogaClassData.COLUMN_ID,
-                        YogaClassData.COLUMN_DAY,
-                        YogaClassData.COLUMN_TIME,
-                        YogaClassData.COLUMN_DURATION,
-                        YogaClassData.COLUMN_NUMBER_OF_PEOPLE,
-                        YogaClassData.COLUMN_PRICE,
-                        YogaClassData.COLUMN_CLASS_TYPE,
-                        YogaClassData.COLUMN_DESCRIPTION},
-
-                YogaClassData.COLUMN_ID + "=?",
-                new String[]{
-                        String.valueOf(id)
-                },
-                null,
-                null,
-                null,
-                null);
-        if (cursor != null && cursor.moveToFirst()) {
-            @SuppressLint("Range") YogaClassData yogaClassData = new YogaClassData(
-                    cursor.getString(cursor.getColumnIndex(YogaClassData.COLUMN_DAY)),
-                    cursor.getString(cursor.getColumnIndex(YogaClassData.COLUMN_TIME)),
-                    cursor.getInt(cursor.getColumnIndex(YogaClassData.COLUMN_DURATION)),
-                    cursor.getInt(cursor.getColumnIndex(YogaClassData.COLUMN_NUMBER_OF_PEOPLE)),
-                    cursor.getInt(cursor.getColumnIndex(YogaClassData.COLUMN_PRICE)),
-                    cursor.getString(cursor.getColumnIndex(YogaClassData.COLUMN_CLASS_TYPE)),
-                    cursor.getString(cursor.getColumnIndex(YogaClassData.COLUMN_DESCRIPTION))
-            );
-            cursor.close();
-            return yogaClassData;
-        } else {
-            return null;
-        }
-    }
-
     @SuppressLint("Range")
     public ArrayList<YogaClassData> getAllYogaClasses() {
         ArrayList<YogaClassData> yogaClassDatas = new ArrayList<>();
@@ -215,13 +177,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.close();
         return id;
     }
-    public boolean yogaClassScheduleExists(int id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT 1 FROM yogaClassSchedule WHERE id = ?", new String[]{String.valueOf(id)});
-        boolean exists = cursor.moveToFirst();
-        cursor.close();
-        return exists;
-    }
     public long insertYogaClassSchedule2(int ID, String date, String teacher, int classId, String description) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -233,13 +188,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             long id = db.insert(YogaClassData.TABLE_NAME, null, values);
             db.close();
             return id;
-    }
-    public boolean yogaClassExists(int id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT 1 FROM yogaClasses WHERE id = ?", new String[]{String.valueOf(id)});
-        boolean exists = cursor.moveToFirst();
-        cursor.close();
-        return exists;
     }
     //For cloud insert
     public long insertYogaClass2(int ID, String day, String time, int duration, int numberOfPeople, int price, String classType, String description) {

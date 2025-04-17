@@ -34,7 +34,6 @@ public class TimePicker {
             DatePickerDialog datePickerDialog = new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
-                    // Format date as you like, e.g., DD/MM/YYYY
                     String formattedDate = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
                     editTextDate.setText(formattedDate);
                 }

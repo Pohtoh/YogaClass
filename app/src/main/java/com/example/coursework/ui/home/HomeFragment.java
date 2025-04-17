@@ -89,10 +89,7 @@ public class HomeFragment extends Fragment {
         final EditText editTextTeacher = view.findViewById(R.id.autoCompleteTextViewTeacher);
         final EditText editTextDescription = view.findViewById(R.id.editTextTextMultiLine);
         Spinner spinner = view.findViewById(R.id.spinner);
-
-        //TimePicker.GetDateLayout(view);
         //drop down
-
         ArrayList<YogaClassData> yogaClassDataList = dbHelper.getAllYogaClasses();
         ArrayList<String> yogaClassNames = new ArrayList<>();
         ArrayAdapter<String> yogaClassAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, yogaClassNames);

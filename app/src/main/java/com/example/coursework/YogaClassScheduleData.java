@@ -66,11 +66,6 @@ public class YogaClassScheduleData {
     public YogaClassScheduleData() {
 
     }
-    public YogaClassScheduleData(String date, String teacher, String description) {
-        this.date = date;
-        this.teacher = teacher;
-        this.description = description;
-    }
     @Override
     public String toString() {
         return "YogaClassScheduleData{" +

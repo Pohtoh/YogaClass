@@ -64,7 +64,7 @@ public class DashboardFragment extends Fragment {
                     data.put("description", schedule.getDescription());
 
                     firestore.collection("YogaSchedules")
-                            .document(String.valueOf(schedule.getId())) // or .add(data) for auto-ID
+                            .document(String.valueOf(schedule.getId()))
                             .set(data)
                             .addOnSuccessListener(aVoid -> Log.d("Firebase", "Uploaded: " + schedule.getId()))
                             .addOnFailureListener(e -> Log.e("Firebase", "Failed: ", e));
@@ -87,6 +87,7 @@ public class DashboardFragment extends Fragment {
                 }
                 Toast.makeText(getContext(), "Synchronized data completed.", Toast.LENGTH_SHORT).show();
             }catch (Exception e){
+                Toast.makeText(getContext(), "Synchronized data failed.", Toast.LENGTH_SHORT).show();
                 Log.e("Firebase", "Failed: ", e);
             }
         });
@@ -123,33 +124,25 @@ public class DashboardFragment extends Fragment {
                         for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                             Long idLong = doc.getLong("id");
                             int id = (idLong != null) ? idLong.intValue() : 0;
-
                             String classType = doc.getString("classType");
                             String day = doc.getString("day");
                             String time = doc.getString("time");
-
                             Long durationLong = doc.getLong("duration");
                             int duration = (durationLong != null) ? durationLong.intValue() : 0;
-
-
                             Long numberOfPeopleLong = doc.getLong("numberOfPeople");
                             int numberOfPeople = (numberOfPeopleLong != null) ? numberOfPeopleLong.intValue() : 0;
-
                             Long priceLong = doc.getLong("price");
                             int price = (priceLong != null) ? priceLong.intValue() : 0;
-
                             String description = doc.getString("description");
 
                             dbHelper.insertYogaClass2(id, day, time, duration, numberOfPeople, price, classType, description);
                         }
                     })
                     .addOnFailureListener(e -> {
+                        Toast.makeText(getContext(), "Retrieve data failed.", Toast.LENGTH_SHORT).show();
                         Log.e("Firebase", "Error getting documents", e);
                     });
         });
-
-
-
         return rootView;
     }
 }
