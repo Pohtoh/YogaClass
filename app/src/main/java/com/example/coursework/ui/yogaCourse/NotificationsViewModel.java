@@ -1,4 +1,4 @@
-package com.example.coursework.ui.notifications;
+package com.example.coursework.ui.yogaCourse;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

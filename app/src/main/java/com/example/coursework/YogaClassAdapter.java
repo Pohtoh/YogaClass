@@ -8,8 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.coursework.ui.home.HomeFragment;
-import com.example.coursework.ui.notifications.NotificationsFragment;
+import com.example.coursework.ui.yogaCourse.YogaCourse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +17,11 @@ public class YogaClassAdapter extends RecyclerView.Adapter<YogaClassAdapter.Yoga
 
     private List<YogaClassData> yogaClassList;
     private Context context;
-    private NotificationsFragment notificationsFragment;
-    public YogaClassAdapter(Context context, ArrayList<YogaClassData> classList, NotificationsFragment notificationsFragment) {
+    private YogaCourse yogaCourse;
+    public YogaClassAdapter(Context context, ArrayList<YogaClassData> classList, YogaCourse yogaCourse) {
         this.context = context;
         this.yogaClassList = classList;
-        this.notificationsFragment = notificationsFragment;
+        this.yogaCourse = yogaCourse;
     }
 
     @NonNull
@@ -50,8 +49,8 @@ public class YogaClassAdapter extends RecyclerView.Adapter<YogaClassAdapter.Yoga
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(notificationsFragment != null){
-                    notificationsFragment.EditYogaClass(true, yogaClass);
+                if(yogaCourse != null){
+                    yogaCourse.EditYogaClass(true, yogaClass);
                 }
             }
     });

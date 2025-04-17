@@ -18,10 +18,10 @@ import java.util.List;
 public class YogaClassAdapter2 extends RecyclerView.Adapter<YogaClassAdapter2.YogaClassViewHolder> {
 
     private List<YogaClassScheduleData> yogaClassScheduleList;
-    private Context context;
-    private HomeFragment homeFragment;
-    private DataBaseHelper dbHelper;
-    private List<YogaClassScheduleData> fullList;
+    private final Context context;
+    private final HomeFragment homeFragment;
+    private final DataBaseHelper dbHelper;
+    private final List<YogaClassScheduleData> fullList;
     private List<YogaClassScheduleData> filteredList;
 
     public YogaClassAdapter2(Context context, List<YogaClassScheduleData> list, HomeFragment homeFragment, DataBaseHelper dbHelper) {

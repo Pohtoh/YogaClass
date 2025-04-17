@@ -1,13 +1,11 @@
-package com.example.coursework.ui.notifications;
+package com.example.coursework.ui.yogaCourse;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -24,7 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 
 
-public class NotificationsFragment extends Fragment {
+public class YogaCourse extends Fragment {
     private RecyclerView recyclerView;
     private YogaClassAdapter yogaClassAdapter;
     private DataBaseHelper dbHelper;
@@ -43,7 +41,7 @@ public class NotificationsFragment extends Fragment {
         dbHelper = new DataBaseHelper(view.getContext());
 
         yogaClassArrayList = dbHelper.getAllYogaClasses();
-        yogaClassAdapter = new YogaClassAdapter(getContext(), yogaClassArrayList, NotificationsFragment.this);
+        yogaClassAdapter = new YogaClassAdapter(getContext(), yogaClassArrayList, YogaCourse.this);
 
         recyclerView.setAdapter(yogaClassAdapter);
         return view;
