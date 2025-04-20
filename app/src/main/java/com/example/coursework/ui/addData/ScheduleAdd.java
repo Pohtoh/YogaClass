@@ -1,5 +1,6 @@
-package com.example.coursework.ui.dashboard;
+package com.example.coursework.ui.addData;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,16 +81,27 @@ public class ScheduleAdd extends Fragment {
                         String day = editTextDate.getText().toString();
                         String teacher = autoCompleteTextViewTeacher.getText().toString();
                         String description = editTextTextMultiLine.getText().toString();
-                        if(dateOfWeek.contains(WDAY)) {
-                            long newRowId = dbHelper.insertYogaClassSchedule(day, teacher, yogaClassID, description);
-                            if (newRowId != -1) {
-                                Toast.makeText(getContext(), "Added new Class to schedule", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(getContext(), "Failed to add new Class to schedule", Toast.LENGTH_SHORT).show();
-                            }
-                        }else{
-                            Toast.makeText(getContext(), "This class is not available on this day", Toast.LENGTH_LONG).show();
-                        }
+                        new AlertDialog.Builder(getContext())
+                                .setTitle("Are you sure you want to add this Schedule on this day?")
+                                .setMessage("Day: "+ day +
+                                        "\nTeacher: " + teacher +
+                                        "\nNote: " + description)
+                                .setPositiveButton("Yes", (dialog, which) -> {
+                                    if(dateOfWeek.contains(WDAY)) {
+                                        long newRowId = dbHelper.insertYogaClassSchedule(day, teacher, yogaClassID, description);
+                                        if (newRowId != -1) {
+                                            Toast.makeText(getContext(), "Added new Class to schedule", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(getContext(), "Failed to add new Class to schedule", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }else{
+                                        Toast.makeText(getContext(), "This class is not available on this day", Toast.LENGTH_LONG).show();
+                                    }
+                                })
+                                .setNegativeButton("No", ((dialog, which) -> {
+                                    dialog.dismiss();
+                                }))
+                                .show();
                     }
                 } catch (Exception e) {
                     Toast.makeText(getContext(), "Invalid input! Please enter valid data.", Toast.LENGTH_SHORT).show();

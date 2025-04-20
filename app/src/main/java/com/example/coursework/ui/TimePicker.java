@@ -18,31 +18,6 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class TimePicker {
-    public static void GetDateLayout(@NonNull View view) {
-
-    EditText editTextDate = view.findViewById(R.id.editTextDate);
-        editTextDate.setInputType(InputType.TYPE_NULL); // Prevent keyboard
-        editTextDate.setFocusable(false);
-        editTextDate.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            final Calendar calendar = Calendar.getInstance();
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-            DatePickerDialog datePickerDialog = new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
-                    String formattedDate = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
-                    editTextDate.setText(formattedDate);
-                }
-            }, year, month, day);
-
-            datePickerDialog.show();
-        }
-    });
-    }
     public static void GetTimeLayout(@NonNull View view) {
 
         EditText editTextTimeStart = view.findViewById(R.id.editTextTimeStart);

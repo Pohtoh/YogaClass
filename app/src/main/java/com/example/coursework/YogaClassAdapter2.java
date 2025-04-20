@@ -33,7 +33,6 @@ public class YogaClassAdapter2 extends RecyclerView.Adapter<YogaClassAdapter2.Yo
         this.dbHelper = dbHelper;
     }
 
-
     @NonNull
     @Override
     public YogaClassViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -109,8 +108,8 @@ public class YogaClassAdapter2 extends RecyclerView.Adapter<YogaClassAdapter2.Yo
 
         if (index != -1) {
             notifyItemRemoved(index);
-        } else {
-            notifyDataSetChanged(); // fallback
+        } else {// ensure item actually removed
+            notifyDataSetChanged();
         }
     }
 }

@@ -13,31 +13,31 @@
 
     <fragment
         android:id="@+id/navigation_adding_data"
-        android:name="com.example.coursework.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/adding_data" />
+        android:name="com.example.coursework.ui.addData.DashboardFragment"
+        android:label="Yoga Course management"
+        tools:layout="@layout/fragment_adding_data" />
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.coursework.ui.yogaCourse.YogaCourse"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:label="Yoga Course"
+        tools:layout="@layout/fragment_yoga_course" />
 
     <fragment
         android:id="@+id/navigation_yoga_course_add"
-        android:name="com.example.coursework.ui.dashboard.YogaCourseAdd"
+        android:name="com.example.coursework.ui.addData.YogaCourseAdd"
         android:label="Add Yoga Course "
         tools:layout="@layout/yoga_course_add" />
 
     <fragment
         android:id="@+id/navigation_schedule_add"
-        android:name="com.example.coursework.ui.dashboard.ScheduleAdd"
+        android:name="com.example.coursework.ui.addData.ScheduleAdd"
         android:label="Add Schedule"
         tools:layout="@layout/yoga_course_schedule_add" />
 
     <fragment
         android:id="@+id/navigation_search"
-        android:name="com.example.coursework.ui.dashboard.ScheduleAdd"
+        android:name="com.example.coursework.ui.addData.ScheduleAdd"
         android:label="Add Schedule"
         tools:layout="@layout/yoga_course_schedule_add" />
 

@@ -218,4 +218,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
         return classType;
     }
+//    public String getYogaScheduleByClassTypeId(int id) {
+//        String classType = null;
+//        SQLiteDatabase db = this.getReadableDatabase();
+//
+//        String query = "SELECT day FROM " + YogaSchData.TABLE_NAME + " WHERE classID = ?";
+//        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(id)});
+//
+//        if (cursor != null && cursor.moveToFirst()) {
+//            classType = cursor.getString(0);
+//            cursor.close();
+//        }
+//        return classType;
+//    }
 }

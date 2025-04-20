@@ -1,4 +1,4 @@
-package com.example.coursework.ui.dashboard;
+package com.example.coursework.ui.addData;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -34,7 +34,7 @@ public class DashboardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.adding_data, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_adding_data, container, false);
         dbHelper = new DataBaseHelper(requireContext());
 
         Button buttonToYogaClassAdd = rootView.findViewById(R.id.buttonToYogaClassAdd);

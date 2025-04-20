@@ -33,7 +33,7 @@ public class YogaClassAdapter extends RecyclerView.Adapter<YogaClassAdapter.Yoga
 
     @Override
     public void onBindViewHolder(@NonNull YogaClassViewHolder holder, int position) {
-        final YogaClassData yogaClassData = yogaClassList.get(position);
+        //final YogaClassData yogaClassData = yogaClassList.get(position);
         YogaClassData yogaClass = yogaClassList.get(position);
 
         holder.classType.setText(yogaClass.getClassType());
@@ -42,8 +42,8 @@ public class YogaClassAdapter extends RecyclerView.Adapter<YogaClassAdapter.Yoga
                 + "\nTimeStart: " + yogaClass.getTime()
                 + " | Duration: " + yogaClass.getDuration()
                 + " | People: " + yogaClass.getNumberOfPeople()
-                + " | Price: " + yogaClass.getPrice() + " Pound\n"
-                + "Note: " + yogaClass.getDescription();
+                + " | Price: " + yogaClass.getPrice() + " £"
+                + "\nNote: " + yogaClass.getDescription();
         holder.details.setText(details);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

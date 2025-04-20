@@ -91,7 +91,7 @@ public class YogaClassData {
     private String classType;
     private String description;
 
-    //Contructors
+
     public YogaClassData(String day, String time, int duration, int numberOfPeople, int price, String classType, String description) {
         this.day = day;
         this.time = time;

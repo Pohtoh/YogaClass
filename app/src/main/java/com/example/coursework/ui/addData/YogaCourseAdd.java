@@ -1,7 +1,8 @@
-package com.example.coursework.ui.dashboard;
+package com.example.coursework.ui.addData;
 
 import static com.example.coursework.ui.TimePicker.GetDayOfTheWeek;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,8 @@ public class YogaCourseAdd extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         dbHelper = new DataBaseHelper(getContext());
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+        dialogBuilder.setView(view);
 
         EditText editTextDate = view.findViewById(R.id.editTextDate);
         GetDayOfTheWeek(view);
@@ -69,12 +72,24 @@ public class YogaCourseAdd extends Fragment {
                         String classType = autoCompleteTextView.getText().toString();
                         String description = editTextTextMultiLine.getText().toString();
 
-                        long newRowId = dbHelper.insertYogaClass(day, time, duration, numberOfPeople, price, classType, description);
-                        if (newRowId != -1) {
-                            Toast.makeText(getContext(), "New Yoga Class Created!", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getContext(), "Add Yoga Class Failed!", Toast.LENGTH_SHORT).show();
-                        }
+                        new AlertDialog.Builder(getContext())
+                            .setTitle("Are you sure you want to add this Yoga Class?")
+                            .setMessage("Day: "+ day + " " + time + " " + duration +
+                                    "\nNumber of People: " + numberOfPeople + " " + price + " £"+
+                                    "\n" + classType +
+                                    "\nNote: " + description)
+                            .setPositiveButton("Yes", (dialog, which) -> {
+                                long newRowId = dbHelper.insertYogaClass(day, time, duration, numberOfPeople, price, classType, description);
+                                if (newRowId != -1) {
+                                    Toast.makeText(getContext(), "New Yoga Class Created!", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(getContext(), "Add Yoga Class Failed!", Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .setNegativeButton("No", ((dialog, which) -> {
+                                dialog.dismiss();
+                                    }))
+                                .show();
                     }
                 } catch (Exception e) {
                     Toast.makeText(getContext(), "Invalid input! Please enter valid data.", Toast.LENGTH_SHORT).show();
